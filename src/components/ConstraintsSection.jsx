@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ConstraintsTab = () => {
+const ConstraintsSection = () => {
     const constraints = [
         "2 ≤ nums.length ≤ 10⁴",
         "-10⁹ ≤ nums[i] ≤ 10⁹",
@@ -9,14 +9,15 @@ const ConstraintsTab = () => {
     ];
 
     return (
-        <div className="fade-in">
+        <div>
+            <div className="flex items-center mb-6">
+                <svg className="w-6 h-6 mr-3 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+                <h2 className="text-xl font-semibold text-gray-900">Constraints</h2>
+            </div>
+
             <div className="constraints-section">
-                <h2 className="text-lg font-semibold mb-4 flex items-center">
-                    <svg className="w-5 h-5 mr-2 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                    </svg>
-                    Constraints
-                </h2>
                 <div className="constraints-list">
                     {constraints.map((constraint, index) => (
                         <div key={index} className="constraint-item">
@@ -42,4 +43,4 @@ const ConstraintsTab = () => {
     );
 };
 
-export default ConstraintsTab; 
+export default ConstraintsSection; 

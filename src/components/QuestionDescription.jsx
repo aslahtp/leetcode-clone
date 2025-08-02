@@ -1,24 +1,10 @@
 import React from 'react';
 import DifficultyBadge from './DifficultyBadge';
-import DescriptionTabs from './DescriptionTabs';
 import MarkdownRenderer from './MarkdownRenderer';
-import ExamplesTab from './ExamplesTab';
-import ConstraintsTab from './ConstraintsTab';
+import ExamplesSection from './ExamplesSection';
+import ConstraintsSection from './ConstraintsSection';
 
-const QuestionDescription = ({ title, description, difficulty, activeTab, setActiveTab }) => {
-    const renderTabContent = () => {
-        switch (activeTab) {
-            case "description":
-                return <MarkdownRenderer content={description} />;
-            case "examples":
-                return <ExamplesTab />;
-            case "constraints":
-                return <ConstraintsTab />;
-            default:
-                return <MarkdownRenderer content={description} />;
-        }
-    };
-
+const QuestionDescription = ({ title, description, difficulty }) => {
     return (
         <div className="question-description h-full flex flex-col">
             <div className="question-description-header">
@@ -36,8 +22,22 @@ const QuestionDescription = ({ title, description, difficulty, activeTab, setAct
             </div>
 
             <div className="question-description-body">
-                <DescriptionTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-                {renderTabContent()}
+                <div className="space-y-8">
+                    {/* Description Section */}
+                    <section className="fade-in">
+                        <MarkdownRenderer content={description} />
+                    </section>
+
+                    {/* Examples Section */}
+                    <section className="fade-in">
+                        <ExamplesSection />
+                    </section>
+
+                    {/* Constraints Section */}
+                    <section className="fade-in">
+                        <ConstraintsSection />
+                    </section>
+                </div>
             </div>
         </div>
     );

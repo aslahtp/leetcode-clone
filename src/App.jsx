@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Header from "./components/Header";
 import QuestionDescription from "./components/QuestionDescription";
 import CodeEditor from "./components/CodeEditor";
@@ -24,14 +24,41 @@ var twoSum = function(nums, target) {
         numMap.set(nums[i], i);
     }
 };`);
-  const [activeTab, setActiveTab] = useState("description");
+
+  // Ref for scrolling to output section
+  const outputRef = useRef(null);
 
   // Custom hooks
   const { title, description, difficulty, loading: questionLoading, error: questionError } = useQuestion(1);
   const { output, isSuccess, isLoading, resultDetails, executeCode } = useCodeExecution();
 
-  const handleRun = () => executeCode(code, 1);
-  const handleSubmit = () => executeCode(code, 1);
+  const scrollToOutput = () => {
+    if (outputRef.current) {
+      outputRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+
+      // Add highlight animation
+      outputRef.current.classList.add('highlight-output');
+      setTimeout(() => {
+        outputRef.current?.classList.remove('highlight-output');
+      }, 1000);
+    }
+  };
+
+  const handleRun = async () => {
+    await executeCode(code, 1);
+    // Small delay to ensure the output section is rendered
+    setTimeout(scrollToOutput, 100);
+  };
+
+  const handleSubmit = async () => {
+    await executeCode(code, 1);
+    // Small delay to ensure the output section is rendered
+    setTimeout(scrollToOutput, 100);
+  };
 
   if (questionLoading) {
     return (
@@ -72,8 +99,6 @@ var twoSum = function(nums, target) {
             title={title}
             description={description}
             difficulty={difficulty}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
           />
 
           {/* Right Panel - Code Editor */}
@@ -88,6 +113,7 @@ var twoSum = function(nums, target) {
 
         {/* Output Section */}
         <OutputSection
+          ref={outputRef}
           output={output}
           isLoading={isLoading}
           isSuccess={isSuccess}
