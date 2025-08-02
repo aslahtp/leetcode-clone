@@ -3,34 +3,37 @@ import Header from "./components/Header";
 import QuestionDescription from "./components/QuestionDescription";
 import CodeEditor from "./components/CodeEditor";
 import OutputSection from "./components/OutputSection";
+import QuestionSelector from "./components/QuestionSelector";
 import { useQuestion } from "./hooks/useQuestion";
+import { useQuestions } from "./hooks/useQuestions";
 import { useCodeExecution } from "./hooks/useCodeExecution";
 
 function App() {
-  const [code, setCode] = useState(`/**
- * @param {number[]} nums
- * @param {number} target
- * @return {number[]}
- */
-var twoSum = function(nums, target) {
-    // Your code here
-    // Example solution:
-    const numMap = new Map();
-    for (let i = 0; i < nums.length; i++) {
-        const complement = target - nums[i];
-        if (numMap.has(complement)) {
-            return [numMap.get(complement), i];
-        }
-        numMap.set(nums[i], i);
-    }
-};`);
+  const [currentQuestionId, setCurrentQuestionId] = useState(1);
+  const [code, setCode] = useState("");
 
   // Ref for scrolling to output section
   const outputRef = useRef(null);
 
   // Custom hooks
-  const { title, description, difficulty, loading: questionLoading, error: questionError } = useQuestion(1);
+  const { questions, loading: questionsLoading } = useQuestions();
+  const { title, description, difficulty, defaultCode, loading: questionLoading, error: questionError } = useQuestion(currentQuestionId);
   const { output, isSuccess, isLoading, resultDetails, executeCode } = useCodeExecution();
+
+  // Update code when question changes
+  React.useEffect(() => {
+    if (defaultCode) {
+      setCode(defaultCode);
+    }
+  }, [defaultCode]);
+
+  // Reset output when question changes
+  React.useEffect(() => {
+    // Clear previous output when switching questions
+    if (output) {
+      // This will be handled by the useCodeExecution hook
+    }
+  }, [currentQuestionId]);
 
   const scrollToOutput = () => {
     if (outputRef.current) {
@@ -49,13 +52,13 @@ var twoSum = function(nums, target) {
   };
 
   const handleRun = async () => {
-    await executeCode(code, 1);
+    await executeCode(code, currentQuestionId);
     // Small delay to ensure the output section is rendered
     setTimeout(scrollToOutput, 100);
   };
 
   const handleSubmit = async () => {
-    await executeCode(code, 1);
+    await executeCode(code, currentQuestionId);
     // Small delay to ensure the output section is rendered
     setTimeout(scrollToOutput, 100);
   };
@@ -93,6 +96,16 @@ var twoSum = function(nums, target) {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Question Selector */}
+        <div className="mb-6">
+          <QuestionSelector
+            questions={questions}
+            currentQuestionId={currentQuestionId}
+            onQuestionChange={setCurrentQuestionId}
+            loading={questionsLoading}
+          />
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(100vh-8rem)]">
           {/* Left Panel - Problem Description */}
           <QuestionDescription

@@ -2,6 +2,9 @@ import React from 'react';
 import Markdown from 'react-markdown';
 
 const MarkdownRenderer = ({ content }) => {
+    // Remove the first h1 tag from the content to prevent duplicate headings
+    const contentWithoutFirstH1 = content.replace(/^#\s+.*$/m, '').trim();
+
     return (
         <div className="markdown-body fade-in">
             <Markdown
@@ -81,7 +84,7 @@ const MarkdownRenderer = ({ content }) => {
                     ),
                 }}
             >
-                {content}
+                {contentWithoutFirstH1}
             </Markdown>
         </div>
     );

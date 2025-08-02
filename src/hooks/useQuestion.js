@@ -5,6 +5,7 @@ export const useQuestion = (questionId = 1) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [difficulty, setDifficulty] = useState("");
+    const [defaultCode, setDefaultCode] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -18,6 +19,7 @@ export const useQuestion = (questionId = 1) => {
                 setTitle(data.title);
                 setDescription(data.description);
                 setDifficulty(data.difficulty || "Easy");
+                setDefaultCode(data.defaultCode || "");
                 setError(null);
             } catch (err) {
                 console.error('Error fetching question:', err);
@@ -37,6 +39,7 @@ export const useQuestion = (questionId = 1) => {
         title,
         description,
         difficulty,
+        defaultCode,
         loading,
         error
     };
