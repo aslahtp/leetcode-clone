@@ -3,7 +3,7 @@ import { Editor } from "@monaco-editor/react";
 
 const CodeEditor = ({ code, setCode, isLoading, onRun, onSubmit }) => {
     return (
-        <div className="card h-full flex flex-col">
+        <div className="card h-full flex flex-col min-h-[400px]">
             <div className="card-header">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
@@ -27,7 +27,7 @@ const CodeEditor = ({ code, setCode, isLoading, onRun, onSubmit }) => {
                 </div>
             </div>
 
-            <div className="flex-1 editor-container">
+            <div className="flex-1 editor-container min-h-[300px]">
                 <Editor
                     height="100%"
                     defaultLanguage="javascript"
@@ -37,7 +37,7 @@ const CodeEditor = ({ code, setCode, isLoading, onRun, onSubmit }) => {
                     options={{
                         minimap: { enabled: false },
                         automaticLayout: true,
-                        fontSize: 14,
+                        fontSize: 13,
                         lineNumbers: "on",
                         roundedSelection: false,
                         scrollBeyondLastLine: false,
@@ -48,47 +48,51 @@ const CodeEditor = ({ code, setCode, isLoading, onRun, onSubmit }) => {
                         suggestOnTriggerCharacters: true,
                         quickSuggestions: true,
                         wordBasedSuggestions: true,
+                        wordWrap: "on",
+                        folding: true,
+                        lineDecorationsWidth: 10,
+                        lineNumbersMinChars: 3,
                     }}
                 />
             </div>
 
             <div className="card-body border-t border-gray-100">
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     <button
                         onClick={onRun}
                         disabled={isLoading}
-                        className={`flex-1 btn-secondary ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`flex-1 btn-secondary py-2 sm:py-3 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         {isLoading ? (
                             <div className="flex items-center justify-center">
                                 <div className="spinner w-4 h-4 mr-2"></div>
-                                Running...
+                                <span className="text-sm sm:text-base">Running...</span>
                             </div>
                         ) : (
                             <div className="flex items-center justify-center">
                                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                Run
+                                <span className="text-sm sm:text-base">Run</span>
                             </div>
                         )}
                     </button>
                     <button
                         onClick={onSubmit}
                         disabled={isLoading}
-                        className={`flex-1 btn-success ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`flex-1 btn-success py-2 sm:py-3 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         {isLoading ? (
                             <div className="flex items-center justify-center">
                                 <div className="spinner w-4 h-4 mr-2"></div>
-                                Submitting...
+                                <span className="text-sm sm:text-base">Submitting...</span>
                             </div>
                         ) : (
                             <div className="flex items-center justify-center">
                                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                Submit
+                                <span className="text-sm sm:text-base">Submit</span>
                             </div>
                         )}
                     </button>

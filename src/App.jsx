@@ -107,7 +107,7 @@ function App() {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(100vh-8rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 min-h-[calc(100vh-12rem)] lg:h-[calc(100vh-8rem)]">
           {/* Left Panel - Problem Description */}
           <QuestionDescription
             title={title}
