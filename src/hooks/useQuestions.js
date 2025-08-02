@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const useQuestions = () => {
     const [questions, setQuestions] = useState([]);
@@ -10,7 +13,7 @@ export const useQuestions = () => {
         const fetchQuestions = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('http://localhost:3000/questions');
+                const response = await axios.get(`${process.env.BACKEND_URL}/questions`);
                 setQuestions(response.data);
                 setError(null);
             } catch (err) {

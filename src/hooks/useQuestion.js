@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const useQuestion = (questionId = 1) => {
     const [title, setTitle] = useState("");
@@ -13,7 +16,7 @@ export const useQuestion = (questionId = 1) => {
         const fetchQuestion = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`http://localhost:3000/questions/${questionId}`);
+                const response = await axios.get(`${process.env.BACKEND_URL}/questions/${questionId}`);
                 const data = response.data;
 
                 setTitle(data.title);
