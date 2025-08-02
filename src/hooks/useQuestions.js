@@ -13,7 +13,7 @@ export const useQuestions = () => {
         const fetchQuestions = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`${process.env.BACKEND_URL}/questions`);
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/questions`);
                 setQuestions(response.data);
                 setError(null);
             } catch (err) {

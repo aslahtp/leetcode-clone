@@ -1,8 +1,5 @@
 import { useState } from 'react';
 import axios from 'axios';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 export const useCodeExecution = () => {
     const [output, setOutput] = useState("");
@@ -22,7 +19,7 @@ export const useCodeExecution = () => {
         setResultDetails(null);
 
         try {
-            const response = await axios.post(`${process.env.BACKEND_URL}/submit/${questionId}`, {
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/submit/${questionId}`, {   
                 code: code
             });
 
