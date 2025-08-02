@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import "./index.css";
 import Header from "./components/Header";
 import QuestionDescription from "./components/QuestionDescription";
 import CodeEditor from "./components/CodeEditor";
